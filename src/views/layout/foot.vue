@@ -24,7 +24,7 @@
           <ul class="social">
             <li><i class="fa fa-facebook"></i><a href="#">Facebook</a></li>
             <li><i class="fa fa-twitter"></i><a href="#">Twitter</a></li>
-            <li><i class="fa fa-github"></i><a href="#">Github</a></li>
+            <li><i class="fa fa-github"></i><a href="https://github.com/">Github</a></li>
           </ul>
         </div></el-col>
         <el-col :span="6"><div class="weibo">

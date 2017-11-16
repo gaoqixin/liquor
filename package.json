@@ -13,8 +13,10 @@
     "axios": "^0.17.0",
     "element-ui": "^2.0.3",
     "font-awesome": "^4.7.0",
+    "muse-ui": "^2.1.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "wangeditor": "^3.0.13"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

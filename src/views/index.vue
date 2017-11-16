@@ -421,11 +421,14 @@
   margin: 0px;
 }
 
+.page {
+  padding: 0px;
+  margin: 0px;
+}
 .page-content{
   margin-left: 5%;
   width: 600px;
   height: 600px;
-  margin-top: 0px;
 }
 
   /*↓↓↓↓↓↓↓↓↓↓↓立体字样式↓↓↓↓↓↓↓↓↓*/
@@ -434,7 +437,7 @@
     z-index: 1;
     position: absolute;
     left: 45%;
-    top: 25%;
+    top: 20%;
   	margin: 2rem auto;
   	width: 20.5rem;
   }

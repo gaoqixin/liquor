@@ -13,7 +13,7 @@
       <el-submenu index="3">
         <template slot="title">关于我</template>
         <el-menu-item index="3-1">翻牌啦 翻牌啦！</el-menu-item>
-        <el-menu-item index="3-2">Github</el-menu-item>
+        <el-menu-item index="3-2"><a href="https://github.com/gaoqixin/liquor">Github</a></el-menu-item>
       </el-submenu>
       <h3 class="title">{{ title }}</h3>
     </el-menu>
@@ -27,13 +27,14 @@
     data() {
       return {
         activeIndex: '1', //激活选项（博客中心）
-        title: '茫茫人海，还好我们能遇见'
+        title: '茫茫人海，还好我们能遇见',
+        github: 'https://github.com/gaoqixin/liquor'
       };
     },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
-      },
+      }
     }
   }
 </script>

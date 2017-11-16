@@ -9,8 +9,11 @@ import $ from 'jquery' //全局引入jquery
 import ElementUI from 'element-ui' //完整引入element-ui
 import 'element-ui/lib/theme-chalk/index.css' //单独引入样式文件
 import 'font-awesome/css/font-awesome.css' //引入FontAwesome样式
+import MuseUI from 'muse-ui' //完整引入muse-ui
+import 'muse-ui/dist/muse-ui.css'
 
 Vue.use(ElementUI)
+Vue.use(MuseUI)
 
 Vue.config.productionTip = false
 
