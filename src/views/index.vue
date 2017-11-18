@@ -238,7 +238,8 @@
               :title="Announcement.title"
               :visible.sync="dialogVisible"
               width="30%"
-              :before-close="handleClose">
+              :before-close="handleClose"
+              :show-close="false">
               <el-row>
                 <el-col :span="8"><div class="annPublish">{{ Announcement.createTime }}</div></el-col>
                 <el-col :span="8"><div class="annType">

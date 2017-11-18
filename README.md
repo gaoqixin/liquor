@@ -1,6 +1,6 @@
 # vue-gp3
 
-> my vue project
+> 欢迎补充
 
 ## Build Setup
 
