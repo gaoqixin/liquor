@@ -88,7 +88,7 @@
             </div>
           </el-main>
         </el-container>
-        <el-aside width="400px">
+        <el-aside width="350px">
           <div class="demo-infinite-container" style="width: 100%;">
             <mu-list>
               <template v-for="item in list">
@@ -244,7 +244,7 @@
 
 <style>
 .blog-list{
-  width: 1000px;
+  width: 900px;
   margin: 0 auto;
   padding: 0px;
   min-height: 700px;
@@ -361,7 +361,6 @@
   text-align: center;
   padding: 10px;
   margin: 0px;
-  min-height: 800px;
-  border: 1px solid forestgreen;
+  /*min-height: 800px;*/
 }
 </style>

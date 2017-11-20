@@ -213,8 +213,8 @@
         		</main>
           </el-main>
         </el-container>
-        <el-aside width="400px">
-          <div style="width: auto; height: 300px;">
+        <el-aside width="350px">
+          <div style="width: auto; height: 200px;">
             <object type="application/x-shockwave-flash" style="outline:none;" data="http://cdn.abowman.com/widgets/fish/fish.swf?" width="100%" height="100%">
               <param name="movie" value="http://cdn.abowman.com/widgets/fish/fish.swf?"></param>
               <param name="AllowScriptAccess" value="always"></param>

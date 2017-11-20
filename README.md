@@ -1,6 +1,7 @@
 # vue-gp3
 
-> 欢迎补充
+> 欢迎各位start
+> [线上预览](https://github.com/gaoqixin/liquor)
 
 ## Build Setup
 
@@ -8,7 +9,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:1109
 npm run dev
 
 # build for production with minification
