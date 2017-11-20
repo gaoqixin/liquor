@@ -22,7 +22,7 @@ export default {
 #app {
   list-style: none;
   font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
 }
 </style>

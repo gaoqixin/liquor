@@ -6,7 +6,6 @@
       </el-header>
       <el-container>
         <el-container>
-          <!-- <el-main>博客展示区</br>博客展示区</br>博客展示区</br>博客展示区</br>博客展示区</br></el-main> -->
           <el-main>
         		<div style="height: 60px;">
               <transition name="el-zoom-in-top">
@@ -33,20 +32,20 @@
             <div>
               <div class="blog-list">
                 <!-- 博客列表 -->
-                <mu-list>
+                <mu-list style="margin: 0px; padding: 0px;">
                   <template v-for="item in list">
-                    <mu-list-item>
-                      <mu-paper class="list-paper" :zDepth="1">
-                        <el-row :gutter="20">
+                    <mu-list-item  style="margin: 0px; padding: 0px;">
+                      <mu-paper class="list-paper" :zDepth="2">
+                        <el-row>
                           <el-col :span="8"><div class="blog-cover">
                             <img :src="item.cover" style="width: 100%; height: 100%;"/>
                           </div></el-col>
                           <el-col :span="16"><div class="blog-content">
                             <el-row>
-                              <el-col :span="4"><div class="blog-content-type">
+                              <el-col :span="3"><div class="blog-content-type">
                                 <el-tag size="small" :type="item.type | tagTypeFilter">{{item.type | typeFilter}}</el-tag>
                               </div></el-col>
-                              <el-col :span="20"><div class="blog-content-title">
+                              <el-col :span="21"><div class="blog-content-title">
                                 <h2>{{ item.title }}</h2>
                               </div></el-col>
                             </el-row>
@@ -89,7 +88,7 @@
             </div>
           </el-main>
         </el-container>
-        <el-aside width="300px">
+        <el-aside width="400px">
           <div class="demo-infinite-container" style="width: 100%;">
             <mu-list>
               <template v-for="item in list">
@@ -245,17 +244,15 @@
 
 <style>
 .blog-list{
-  width: 90%;
-  min-height: 500px;
+  width: 1000px;
   margin: 0 auto;
   padding: 0px;
+  min-height: 700px;
 }
 .blog-cover{
-  width: 280px;
   height: 190px;
 }
 .blog-content{
-  width: 100%;
   height: 190px;
   padding: 5px 5px;
 }
@@ -294,22 +291,22 @@
   color: #989898;
 }
 .blog-content-brief{
-  font-size: 14px;
+  font-size: 16px;
   color: #989898;
   text-align: left;
   text-indent: 2em; /*缩进2字符。em是相对单位，2em即现在一个字大小的两倍*/
   line-height: 30px;
-  padding: 15px 5px;
+  padding: 10px 5px;
   /*多行超出显示省略号*/
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4; /*显示4行*/
+  -webkit-line-clamp: 4; /*第4行显示...*/
   overflow: hidden;
 }
 
 .pagination-container{
   text-align: right;
-  padding: 0px 5%;
+  padding: 0px 230px;
 }
 .transition-box {
     height: 80px;
@@ -362,8 +359,9 @@
   background-color: #E9EEF3;
   color: #333;
   text-align: center;
-  height: auto;
   padding: 10px;
   margin: 0px;
+  min-height: 800px;
+  border: 1px solid forestgreen;
 }
 </style>
