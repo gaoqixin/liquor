@@ -39,7 +39,7 @@
       </el-row>
 		</div>
     <div class="footer-section">
-			<p>Copyright &copy; 2015.Company name All rights reserved.</p>
+			<p>Copyright &copy; 2017 沃特麦仑.</p>
     </div>
   </div>
 </template>

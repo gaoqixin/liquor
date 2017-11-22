@@ -11,7 +11,7 @@
       <router-link to="/" ><el-menu-item index="1">高高大鹏</el-menu-item></router-link>
       <router-link to="/blog" ><el-menu-item index="2">博客中心</el-menu-item></router-link>
       <el-submenu index="3">
-        <template slot="title">关于我</template>
+        <template slot="title">自我介绍</template>
         <el-menu-item index="3-1">翻牌啦 翻牌啦！</el-menu-item>
         <el-menu-item index="3-2"><a href="https://github.com/gaoqixin/liquor">Github</a></el-menu-item>
       </el-submenu>

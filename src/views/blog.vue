@@ -7,11 +7,11 @@
       <el-container>
         <el-container>
           <el-main>
-        		<div style="height: 60px;">
+        		<div style="height: 60px; margin: 0 auto;">
               <transition name="el-zoom-in-top">
                 <!-- 全局搜索、类型筛选 -->
                 <div v-show="showSearch" class="transition-box">
-                    <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键字" v-model="listParams.key">
+                    <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="输入关键字" v-model="listParams.key">
                     </el-input>
 
                     <el-select clearable style="width: 90px" class="filter-item" v-model="listParams.type" placeholder="类型">
@@ -81,22 +81,39 @@
               <div>
                 <!-- 分页 -->
                 <div v-show="!listLoading" class="pagination-container">
-                  <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listParams.pageNum" :page-sizes="[10,20,30,50]" :page-size="listParams.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="listParams.totalNum">
+                  <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listParams.pageNum" :page-sizes="[5,10,20]" :page-size="listParams.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="listParams.totalNum">
                   </el-pagination>
                 </div>
               </div>
             </div>
           </el-main>
         </el-container>
-        <el-aside width="350px">
-          <div class="demo-infinite-container" style="width: 100%;">
-            <mu-list>
-              <template v-for="item in list">
-                <mu-list-item :title="item.title"/>
-                <mu-divider/>
-              </template>
-            </mu-list>
-            <!-- <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/> -->
+        <el-aside width="400px">
+          <div class="infinite-container">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>{{ TagsTitle }}</span>
+              </div>
+              <div v-for="item in manageTypeOptions" :key="item.key" class="text item">
+                  <span @click="showAnn(item.id)">
+                    <el-tag size="mini" :type="item.key | tagTypeFilter">{{ item.key | typeFilter }}</el-tag>
+                    {{ item.title }}
+                  </span>
+              </div>
+            </el-card>
+          </div>
+          <div>
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>{{ BlogTitle }}</span>
+              </div>
+              <div v-for="item in list" :key="item.id" class="text item">
+                  <span @click="showAnn(item.id)">
+                    <el-tag size="mini" :type="item.type | tagTypeFilter">{{ item.type | typeFilter }}</el-tag>
+                    {{ item.title }}
+                  </span>
+              </div>
+            </el-card>
           </div>
         </el-aside>
       </el-container>
@@ -156,11 +173,13 @@
         list: null,
         showSearch: false,
         blogType: '最新博文',
+        TagsTitle: '热门标签',
+        BlogTitle: '近期文章',
 
-        // listLoading: false,
+        listLoading: false,
         listParams: {
           pageNum: 1,
-          pageSize: 10,
+          pageSize: 5,
           totalNum: 0,
           key: undefined,
           type: undefined
@@ -194,11 +213,20 @@
     },
     methods: {
       getBlogList() {
-        this.listLoading = true;
+        // this.listLoading = true;
+        const loading = this.$loading({ //自定义加载动画
+          lock: true,
+          text: '拼命加载中...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
         getBlogs(this.listParams).then(response => {
           this.list = response.data.list;
           this.listParams.totalNum = response.data.page.totalNum;
-          this.listLoading = false;
+          // this.listLoading = false;
+          loading.close(); //关闭自定义加载动画
+        }, err => {
+          console.log('错误');
         });
       },
       handleFilter() {
@@ -214,29 +242,11 @@
         this.showSearch = false;
       },
       handleSizeChange(val) { //页面显示条数修改
-        this.listParams.pageSize = val;
-        const loading = this.$loading({ //自定义loading加载
-          lock: true,
-          text: '拼命加载中...',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        this.getBlogList();
-        loading.close(); //结束loading动画
+        this.listParams.pageSize = val
       },
       handleCurrentChange(val) { //翻页
         this.listParams.pageNum = val;
-        // const loading = this.$loading({
-        //   lock: true,
-        //   text: '拼命加载中...',
-        //   spinner: 'el-icon-loading',
-        //   background: 'rgba(0, 0, 0, 0.7)'
-        // });
-        // setTimeout(() => {
-        //
-        // }, 2000);
-        this.getBlogList();
-        // loading.close();
+        this.getBlogList()
       },
     }
   }
@@ -318,12 +328,11 @@
     position: fixed;
     z-index: 1;
   }
-.demo-infinite-container{
-  width: 256px;
-  height: 300px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  border: 1px solid #d9d9d9;
+.infinite-container{
+  width: 100%;
+  /* height: 400px;
+  overflow: auto; */
+  margin-bottom: 20px;
 }
 
 .text {
@@ -348,7 +357,7 @@
     margin: 0px;
   }
 .el-aside {
-  background-color: #D3DCE6;
+  background-color: #E9EEF3;
   color: #333;
   text-align: center;
   line-height: 200px;
