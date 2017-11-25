@@ -23,7 +23,7 @@
                 </div>
               </transition>
               <el-row :gutter="20">
-                <el-col :span="20"><div><h1 style="color: #989898; font-family: 'PingFang SC';">{{ blogType }}</h1></div></el-col>
+                <el-col :span="20"><div><h1 class="blog-type">{{ blogType }}</h1></div></el-col>
                 <el-col :span="4"><div style="text-align: right;">
                   <h2><i class="el-icon-search" @click="showSearch = !showSearch"></i></h2>
                 </div></el-col>
@@ -38,7 +38,8 @@
                       <mu-paper class="list-paper" :zDepth="2">
                         <el-row>
                           <el-col :span="8"><div class="blog-cover">
-                            <img :src="item.cover" style="width: 100%; height: 100%;"/>
+                            <!-- object-fit: cover; 图片不失真 -->
+                            <img :src="item.cover" style="width: 100%; height: 100%; object-fit: cover;"/>
                           </div></el-col>
                           <el-col :span="16"><div class="blog-content">
                             <el-row>
@@ -94,7 +95,7 @@
               <div slot="header" class="clearfix">
                 <span>{{ TagsTitle }}</span>
               </div>
-              <div v-for="item in manageTypeOptions" :key="item.key" class="text item">
+              <div v-for="item in manageTypeOptions" :key="item.key" class="text tags_item">
                   <span @click="showAnn(item.id)">
                     <el-tag size="mini" :type="item.key | tagTypeFilter">{{ item.key | typeFilter }}</el-tag>
                     {{ item.title }}
@@ -107,7 +108,7 @@
               <div slot="header" class="clearfix">
                 <span>{{ BlogTitle }}</span>
               </div>
-              <div v-for="item in list" :key="item.id" class="text item">
+              <div v-for="item in hotList" :key="item.id" class="text blog_item">
                   <span @click="showAnn(item.id)">
                     <el-tag size="mini" :type="item.type | tagTypeFilter">{{ item.type | typeFilter }}</el-tag>
                     {{ item.title }}
@@ -171,10 +172,11 @@
     data() {
       return {
         list: null,
+        hotList: null,
         showSearch: false,
         blogType: '最新博文',
         TagsTitle: '热门标签',
-        BlogTitle: '近期文章',
+        BlogTitle: '热门文章',
 
         listLoading: false,
         listParams: {
@@ -186,16 +188,12 @@
         },
         manageTypeOptions, //博客类型
 
-        blog: {
-          blogTitle: '',
-          type: undefined,
-          content: '',
-          createTime: '',
-        }
+        blog: {}
       };
     },
     created() {
       this.getBlogList();
+      this.getHotBlog();
     },
     filters: {
       createTimeFilter(date){
@@ -229,6 +227,16 @@
           console.log('错误');
         });
       },
+      getHotBlog(){
+        let params = {
+          pageNum: 1,
+          pageSize: 5,
+          sort: 2
+        }
+        getBlogs(params).then(response => {
+          this.hotList = response.data.list;
+        })
+      },
       handleFilter() {
         if (this.listParams.key == '') {
           this.listParams.key = undefined
@@ -253,6 +261,12 @@
 </script>
 
 <style>
+.blog-type{
+  letter-spacing: 10px;
+  color: #fafafa;
+  letter-spacing: 0;
+  text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+}
 .blog-list{
   width: 900px;
   margin: 0 auto;
@@ -338,9 +352,28 @@
 .text {
   font-size: 14px;
 }
-
-.item {
+.blog_item {
+  font-size: 12px;
   margin-bottom: 18px;
+  /*超出显示省略号*/
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /*显示行数*/
+  -webkit-box-orient: vertical;
+}
+.blog_item :hover {
+  text-decoration: underline;
+  color: #EE7700;
+  cursor:pointer; /*鼠标指针手指样式*/
+}
+
+.tags_item{
+  float: left;
+  margin: 10px 10px;
+}
+.tags_item :hover{
+  cursor:pointer;
 }
 
 .box-card {
