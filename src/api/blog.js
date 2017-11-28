@@ -8,3 +8,11 @@ export function getBlogs(params){
     data: params
   });
 }
+
+//获取博客类型数量
+export function getBlogType(){
+  return fetch({
+    url: '/api/blog/type',
+    method: 'post'
+  });
+}

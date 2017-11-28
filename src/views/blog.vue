@@ -25,7 +25,7 @@
               <el-row :gutter="20">
                 <el-col :span="20"><div><h1 class="blog-type">{{ blogType }}</h1></div></el-col>
                 <el-col :span="4"><div style="text-align: right;">
-                  <h2><i class="el-icon-search" @click="showSearch = !showSearch"></i></h2>
+                  <h1><i class="el-icon-search" @click="showSearch = !showSearch"></i></h1>
                 </div></el-col>
               </el-row>
             </div>
@@ -34,7 +34,7 @@
                 <!-- 博客列表 -->
                 <mu-list style="margin: 0px; padding: 0px;">
                   <template v-for="item in list">
-                    <mu-list-item  style="margin: 0px; padding: 0px;">
+                    <mu-list-item  style="margin: 0px; padding: 0px;" @click="showBlogDetails(item.id)">
                       <mu-paper class="list-paper" :zDepth="2">
                         <el-row>
                           <el-col :span="8"><div class="blog-cover">
@@ -90,31 +90,36 @@
           </el-main>
         </el-container>
         <el-aside width="400px">
-          <div class="infinite-container">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>{{ TagsTitle }}</span>
+          <div class="aside">
+            <mu-paper class="list-paper" :zDepth="2">
+              <div class="infinite-container">
+                <el-card class="box-card">
+                  <div slot="header" class="clearfix">
+                    <span>{{ TagsTitle }}</span>
+                  </div>
+                  <div v-for="item in typeList" :key="item.id" class="text tags_item">
+                      <span @click="showBlogByType(item.blogType)">
+                        <el-tag size="mini" :type="item.blogType | tagTypeFilter">{{ item.blogType | typeFilter }} ({{ item.num }})</el-tag>
+                      </span>
+                  </div>
+                </el-card>
               </div>
-              <div v-for="item in manageTypeOptions" :key="item.key" class="text tags_item">
-                  <span @click="showAnn(item.id)">
-                    <el-tag size="mini" :type="item.key | tagTypeFilter">{{ item.key | typeFilter }}</el-tag>
-                    {{ item.title }}
-                  </span>
+            </mu-paper>
+            <mu-paper class="list-paper" :zDepth="2">
+              <div class="infinite-container">
+                <el-card class="box-card">
+                  <div slot="header" class="clearfix">
+                    <span>{{ BlogTitle }}</span>
+                  </div>
+                  <div v-for="item in hotList" :key="item.id" class="text blog_item">
+                      <span @click="showBlogDetails(item.id)">
+                        <el-tag size="mini" :type="item.type | tagTypeFilter">{{ item.type | typeFilter }}</el-tag>
+                        {{ item.title }}
+                      </span>
+                  </div>
+                </el-card>
               </div>
-            </el-card>
-          </div>
-          <div>
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>{{ BlogTitle }}</span>
-              </div>
-              <div v-for="item in hotList" :key="item.id" class="text blog_item">
-                  <span @click="showAnn(item.id)">
-                    <el-tag size="mini" :type="item.type | tagTypeFilter">{{ item.type | typeFilter }}</el-tag>
-                    {{ item.title }}
-                  </span>
-              </div>
-            </el-card>
+            </mu-paper>
           </div>
         </el-aside>
       </el-container>
@@ -130,7 +135,8 @@
   import Foot from './layout/foot'
 
   import {
-    getBlogs
+    getBlogs,
+    getBlogType
   } from '@/api/blog'
   import {format} from '@/utils/index'
 
@@ -171,8 +177,9 @@
     },
     data() {
       return {
-        list: null,
-        hotList: null,
+        list: null, //博客列表
+        hotList: null, //热门博客列表
+        typeList: null, //类型数量列表
         showSearch: false,
         blogType: '最新博文',
         TagsTitle: '热门标签',
@@ -192,8 +199,9 @@
       };
     },
     created() {
-      this.getBlogList();
-      this.getHotBlog();
+      this.getBlogList(); //博客列表接口
+      this.getHotBlog(); //热门博客
+      this.getBlogTypeList(); //博客类型
     },
     filters: {
       createTimeFilter(date){
@@ -214,7 +222,7 @@
         // this.listLoading = true;
         const loading = this.$loading({ //自定义加载动画
           lock: true,
-          text: '拼命加载中...',
+          text: '大鹏起飞了...',
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
@@ -224,6 +232,7 @@
           // this.listLoading = false;
           loading.close(); //关闭自定义加载动画
         }, err => {
+          loading.close();
           console.log('错误');
         });
       },
@@ -235,6 +244,11 @@
         }
         getBlogs(params).then(response => {
           this.hotList = response.data.list;
+        })
+      },
+      getBlogTypeList(){
+        getBlogType().then(response => {
+          this.typeList = response.data.list;
         })
       },
       handleFilter() {
@@ -250,12 +264,20 @@
         this.showSearch = false;
       },
       handleSizeChange(val) { //页面显示条数修改
-        this.listParams.pageSize = val
+        this.listParams.pageSize = val;
+        this.getBlogList();
       },
       handleCurrentChange(val) { //翻页
         this.listParams.pageNum = val;
-        this.getBlogList()
+        this.getBlogList();
       },
+      showBlogByType(val){
+        this.listParams.type = val;
+        this.getBlogList();
+      },
+      showBlogDetails(val){
+        console.log("博客id： " + val);
+      }
     }
   }
 </script>
@@ -264,7 +286,6 @@
 .blog-type{
   letter-spacing: 10px;
   color: #fafafa;
-  letter-spacing: 0;
   text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
 }
 .blog-list{
@@ -344,9 +365,11 @@
   }
 .infinite-container{
   width: 100%;
-  /* height: 400px;
-  overflow: auto; */
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+.aside{
+  /*border: 1px solid red;
+  position: fixed;*/
 }
 
 .text {
@@ -370,7 +393,7 @@
 
 .tags_item{
   float: left;
-  margin: 10px 10px;
+  margin: 15px 20px;
 }
 .tags_item :hover{
   cursor:pointer;
