@@ -16,3 +16,12 @@ export function getBlogType(){
     method: 'post'
   });
 }
+
+//博客详情
+export function getBlogDetails(params){
+  return fetch({
+    url: '/api/blog/details',
+    method: 'post',
+    data: params
+  });
+}

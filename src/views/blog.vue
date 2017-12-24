@@ -79,12 +79,10 @@
                   </template>
                 </mu-list>
               </div>
-              <div>
-                <!-- 分页 -->
-                <div v-show="!listLoading" class="pagination-container">
-                  <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listParams.pageNum" :page-sizes="[5,10,20]" :page-size="listParams.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="listParams.totalNum">
-                  </el-pagination>
-                </div>
+              <!-- 分页 -->
+              <div v-show="!listLoading" class="pagination-container">
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listParams.pageNum" :page-sizes="[5,10,20]" :page-size="listParams.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="listParams.totalNum">
+                </el-pagination>
               </div>
             </div>
           </el-main>
@@ -220,7 +218,7 @@
     methods: {
       getBlogList() {
         // this.listLoading = true;
-        const loading = this.$loading({ //自定义加载动画
+        let loading = this.$loading({ //自定义加载动画
           lock: true,
           text: '大鹏起飞了...',
           spinner: 'el-icon-loading',
@@ -276,7 +274,7 @@
         this.getBlogList();
       },
       showBlogDetails(val){
-        console.log("博客id： " + val);
+        this.$router.push({ path: '/blog/details/'+ val });
       }
     }
   }
@@ -426,6 +424,6 @@
   text-align: center;
   padding: 10px;
   margin: 0px;
-  /*min-height: 800px;*/
+  /*min-height: 700px;*/
 }
 </style>

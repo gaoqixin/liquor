@@ -25,5 +25,6 @@ new Vue({
   el: '#app',
   router, //注入到跟实例中
   template: '<App/>',
-  components: { App } //注册组件
+  components: { App }, //注册组件
+  render: h => h(App)
 })
