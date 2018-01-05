@@ -55,7 +55,7 @@
                   <div class="tags">
                     <el-row>
                       <el-col :span="24">
-                        <el-collapse v-for="(val, key, index) in blog.feature" v-model="activeName" accordion>
+                        <el-collapse v-for="(val, key, index) in blog.feature" :key="key" v-model="activeName" accordion>
                           <el-collapse-item :title="key" :name="index">
                             <div>{{ val }}</div>
                           </el-collapse-item>
